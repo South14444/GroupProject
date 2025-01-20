@@ -5,8 +5,40 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GroupProject"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Вход и Регистрация" Height="400" Width="300">
     <Grid>
+        <TabControl>
+            <!-- Вкладка Вход -->
+            <TabItem Header="Вход">
+                <StackPanel Margin="20">
+                    <TextBlock Text="Email" Margin="0,0,0,5"/>
+                    <TextBox Name="EmailLoginTextBox" Width="250" Margin="0,0,0,10"/>
 
+                    <TextBlock Text="Пароль" Margin="0,0,0,5"/>
+                    <PasswordBox Name="PasswordLoginBox" Width="250" Margin="0,0,0,10"/>
+
+                    <Button Content="Войти" Width="250" Click="LoginButton_Click"/>
+                </StackPanel>
+            </TabItem>
+
+            <!-- Вкладка Регистрация -->
+            <TabItem Header="Регистрация">
+                <StackPanel Margin="20">
+                    <TextBlock Text="Email" Margin="0,0,0,5"/>
+                    <TextBox Name="EmailRegisterTextBox" Width="250" Margin="0,0,0,10"/>
+
+                    <TextBlock Text="Пароль" Margin="0,0,0,5"/>
+                    <PasswordBox Name="PasswordRegisterBox" Width="250" Margin="0,0,0,10"/>
+
+                    <TextBlock Text="Имя" Margin="0,0,0,5"/>
+                    <TextBox Name="FirstNameTextBox" Width="250" Margin="0,0,0,10"/>
+
+                    <TextBlock Text="Фамилия" Margin="0,0,0,5"/>
+                    <TextBox Name="LastNameTextBox" Width="250" Margin="0,0,0,10"/>
+
+                    <Button Content="Зарегистрироваться" Width="250" Click="RegisterButton_Click"/>
+                </StackPanel>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>
