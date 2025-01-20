@@ -27,5 +27,26 @@ namespace GroupProject.Service
                 await context.SaveChangesAsync();
             }
         }
+
+        public async Task<User> LoginUserAsync(string email, string password)
+        {
+            using (var context = new UserDbContext())
+            {
+                var user = await context.Users
+                    .FirstOrDefaultAsync(u => u.Email == email);
+
+                if (user == null)
+                {
+                    throw new Exception("Пользователь не найден.");
+                }
+
+                if (user.Password != password)
+                {
+                    throw new Exception("Неверный пароль.");
+                }
+
+                return user;
+            }
+        }
     }
 }
