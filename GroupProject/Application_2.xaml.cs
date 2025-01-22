@@ -106,7 +106,8 @@ namespace GroupProject
         }
         public async Task Diet(string request)
         {
-            var (response1, updatedHistory) = await GetChatCompletion(accessToken, request, conversationHistory);
+            string str = $"Учитывай что человек хочет:{tipe}";
+            var (response1, updatedHistory) = await GetChatCompletion(accessToken, str+request, conversationHistory);
             if (response1 != null)
             {
                 JObject responseJson = JObject.Parse(response1);
@@ -142,11 +143,11 @@ namespace GroupProject
             {
                 model = "GigaChat:latest",
                 messages = conversationHistory,
-                temperature = 1,
+                temperature = 0.1,
                 top_p = 0.1,
                 n = 1,
                 stream = false,
-                max_tokens = 512,
+                max_tokens = 1024,
                 repetition_penalty = 1,
                 update_interval = 0
             });

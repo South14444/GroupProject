@@ -16,9 +16,9 @@
         <!-- Верхняя часть с ListBox и кнопкой -->
         <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="5">
             <ListBox x:Name="DietListBox" Width="200" Margin="0,0,10,0">
-                <ListBoxItem Content="Кето" />
-                <ListBoxItem Content="Палео" />
-                <ListBoxItem Content="Вегетарианская" />
+                <ListBoxItem Content="Уменьшение веса" />
+                <ListBoxItem Content="Сохранение веса" />
+                <ListBoxItem Content="Увеличение веса" />
             </ListBox>
             <Button Content="Выбрать" Width="100" Click="SelectButton_Click"/>
         </StackPanel>
