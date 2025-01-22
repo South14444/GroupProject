@@ -14,11 +14,12 @@
         </Border>
 
         <!-- Правая половина с TextBox и кнопкой -->
-        <StackPanel Grid.Column="1" Margin="5">
+        <StackPanel Grid.Column="1" Margin="5,5,5,142">
             <TextBox x:Name="ReadOnlyTextBox"  Text="Введите продукт или блюдо" Margin="0,0,0,10"/>
             <TextBox x:Name="InputTextBox" IsReadOnly="True" Text="Калорийность на 100 грамм" Margin="0,0,0,10"/>
             <Button Content="" Click="Button_Click"/>
         </StackPanel>
+        <Button Grid.Column="1" Content="Диеты" HorizontalAlignment="Left" Height="41" Margin="5,206,0,0" VerticalAlignment="Top" Width="280" Click="Button_Click_1"/>
     </Grid>
 </Window>
 
