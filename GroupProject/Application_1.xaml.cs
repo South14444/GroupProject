@@ -8,8 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -18,10 +16,6 @@ using System.Windows.Threading;
 
 namespace GroupProject
 {
-    /// <summary>
-    /// Логика взаимодействия для Application_1.xaml
-    /// </summary>
-    
     public partial class Application_1 : Window
     {
         private DispatcherTimer timer;
@@ -31,8 +25,9 @@ namespace GroupProject
             InitializeComponent();
             CreateGigachatToken();
             Start_timer();
-
+            this.Closing += Window_Closing; 
         }
+
         private void Start_timer()
         {
             timer = new DispatcherTimer();
@@ -40,10 +35,12 @@ namespace GroupProject
             timer.Tick += Timer_tik;
             timer.Start();
         }
-        private void  Timer_tik(object sender, EventArgs e)
+
+        private void Timer_tik(object sender, EventArgs e)
         {
             CreateGigachatToken();
         }
+
         public async Task CreateGigachatToken()
         {
             try
@@ -55,9 +52,9 @@ namespace GroupProject
                 request.Headers.Add("Authorization", "Basic MGU3NDdjZDktMWMzOS00ZTNiLWI0NGEtYTlmMzIyYjVhZjk3OjkzNDhlOTZiLTZkZGItNGE0ZC1hMWVkLTljOTRiZDA0ZmQzYg==");
 
                 var collection = new List<KeyValuePair<string, string>>
-            {
-                new("scope", "GIGACHAT_API_PERS")
-            };
+                {
+                    new("scope", "GIGACHAT_API_PERS")
+                };
                 var content = new FormUrlEncodedContent(collection);
                 request.Content = content;
 
@@ -67,37 +64,35 @@ namespace GroupProject
                 {
                     string responseContent = await response.Content.ReadAsStringAsync();
                     JObject json = JObject.Parse(responseContent);
-                    Console.WriteLine("Ответ получен успешно:");
-                    Console.WriteLine(json);
                     accessToken = json["access_token"]?.ToString();
-                    MessageBox.Show(accessToken);
                 }
                 else
                 {
-                    Console.WriteLine($"Ошибка: {response.StatusCode} - {response.ReasonPhrase}");
                     string errorContent = await response.Content.ReadAsStringAsync();
-                    Console.WriteLine("Подробности ошибки:");
-                    Console.WriteLine(errorContent);
+                    MessageBox.Show("Ошибка: " + response.StatusCode);
+                    MessageBox.Show(errorContent);
                 }
             }
             catch (HttpRequestException e)
             {
-                Console.WriteLine("Ошибка запроса:");
-                Console.WriteLine(e.Message);
+                MessageBox.Show("Ошибка запроса:");
+                MessageBox.Show(e.Message);
             }
             catch (Exception e)
             {
-                Console.WriteLine("Произошла непредвиденная ошибка:");
-                Console.WriteLine(e.Message);
+                MessageBox.Show("Произошла непредвиденная ошибка:");
+                MessageBox.Show(e.Message);
             }
         }
+
         List<Dictionary<string, string>> conversationHistory = null;
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show(accessToken);
             string food = ReadOnlyTextBox.Text;
             Food(food);
         }
+
         public async Task Food(string food)
         {
             string PromtFood = "Ты должен возращать мне только точное число (без каких либо слов) калорий в 100 граммах этого продукта ";
@@ -114,10 +109,11 @@ namespace GroupProject
                 MessageBox.Show("Произошла ошибка при выполнении запроса.");
             }
         }
+
         public static async Task<(string, List<Dictionary<string, string>>)> GetChatCompletion(
-        string authToken,
-        string userMessage,
-        List<Dictionary<string, string>> conversationHistory = null)
+            string authToken,
+            string userMessage,
+            List<Dictionary<string, string>> conversationHistory = null)
         {
             string url = "https://gigachat.devices.sberbank.ru/api/v1/chat/completions";
 
@@ -127,10 +123,10 @@ namespace GroupProject
             }
 
             conversationHistory.Add(new Dictionary<string, string>
-        {
-            { "role", "user" },
-            { "content", userMessage }
-        });
+            {
+                { "role", "user" },
+                { "content", userMessage }
+            });
 
             var payload = JsonConvert.SerializeObject(new
             {
@@ -163,10 +159,10 @@ namespace GroupProject
                         string assistantContent = jsonResponse["choices"]?[0]?["message"]?["content"]?.ToString();
 
                         conversationHistory.Add(new Dictionary<string, string>
-                    {
-                        { "role", "assistant" },
-                        { "content", assistantContent }
-                    });
+                        {
+                            { "role", "assistant" },
+                            { "content", assistantContent }
+                        });
 
                         return (responseData, conversationHistory);
                     }
@@ -184,12 +180,20 @@ namespace GroupProject
             }
         }
 
-            private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             Application_2 secondWindow = new Application_2();
             secondWindow.Show();
             this.Close();
         }
 
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (timer != null)
+            {
+                timer.Stop();
+                timer = null;
+            }
+        }
     }
 }
