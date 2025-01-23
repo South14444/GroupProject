@@ -199,5 +199,17 @@ namespace GroupProject
                 timer = null;
             }
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (timer != null)
+            {
+                timer.Stop();
+                timer = null;
+            }
+            Application_1 secondWindow = new Application_1();
+            secondWindow.Show();
+            this.Close();
+        }
     }
 }
