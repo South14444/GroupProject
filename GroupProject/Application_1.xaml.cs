@@ -58,7 +58,14 @@ namespace GroupProject
             // Загружаем историю из файла при старте приложения
             LoadStoriesFromJson(storyFilePath);
         }
-
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (timer != null)
+            {
+                timer.Stop();
+                timer = null;
+            }
+        }
         private void Start_timer()
         {
             timer = new DispatcherTimer();
@@ -83,9 +90,9 @@ namespace GroupProject
                 request.Headers.Add("Authorization", "Basic MGU3NDdjZDktMWMzOS00ZTNiLWI0NGEtYTlmMzIyYjVhZjk3OjkzNDhlOTZiLTZkZGItNGE0ZC1hMWVkLTljOTRiZDA0ZmQzYg==");
 
                 var collection = new List<KeyValuePair<string, string>>
-                {
-                    new("scope", "GIGACHAT_API_PERS")
-                };
+            {
+                new("scope", "GIGACHAT_API_PERS")
+            };
                 var content = new FormUrlEncodedContent(collection);
                 request.Content = content;
 
@@ -144,8 +151,8 @@ namespace GroupProject
                     // Сохраняем историю в файл
                     SaveStoriesToJson(stories, storyFilePath);
 
-                    // Обновляем ListBox
-                    UpdateListBox();
+                    // Обновляем ListView
+                    UpdateListView();
                 }
             }
             else
@@ -154,14 +161,11 @@ namespace GroupProject
             }
         }
 
-        // Обновление ListBox на UI с новыми записями
-        private void UpdateListBox()
+        // Обновление ListView на UI с новыми записями
+        private void UpdateListView()
         {
-            ListBoxStory.Items.Clear();
-            foreach (var story in stories)
-            {
-                ListBoxStory.Items.Add($"{story.Name} {story.Color}");
-            }
+            ListViewStory.ItemsSource = null; // Очистить текущие данные
+            ListViewStory.ItemsSource = stories; // Привязать обновленный список
         }
 
         public static async Task<(string, List<Dictionary<string, string>>)> GetChatCompletion(
@@ -177,10 +181,10 @@ namespace GroupProject
             }
 
             conversationHistory.Add(new Dictionary<string, string>
-            {
-                { "role", "user" },
-                { "content", userMessage }
-            });
+        {
+            { "role", "user" },
+            { "content", userMessage }
+        });
 
             var payload = JsonConvert.SerializeObject(new
             {
@@ -213,10 +217,10 @@ namespace GroupProject
                         string assistantContent = jsonResponse["choices"]?[0]?["message"]?["content"]?.ToString();
 
                         conversationHistory.Add(new Dictionary<string, string>
-                        {
-                            { "role", "assistant" },
-                            { "content", assistantContent }
-                        });
+                    {
+                        { "role", "assistant" },
+                        { "content", assistantContent }
+                    });
 
                         return (responseData, conversationHistory);
                     }
@@ -231,15 +235,6 @@ namespace GroupProject
             {
                 Console.WriteLine($"Произошла ошибка: {ex.Message}");
                 return (null, conversationHistory);
-            }
-        }
-
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            if (timer != null)
-            {
-                timer.Stop();
-                timer = null;
             }
         }
 
@@ -273,7 +268,7 @@ namespace GroupProject
                 {
                     string json = File.ReadAllText(filePath);
                     stories = JsonConvert.DeserializeObject<List<Story>>(json) ?? new List<Story>();
-                    UpdateListBox(); // Обновляем ListBox при загрузке данных
+                    UpdateListView(); // Обновляем ListView при загрузке данных
                 }
                 catch (Exception ex)
                 {
