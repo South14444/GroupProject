@@ -106,12 +106,14 @@ namespace GroupProject
         }
         public async Task Diet(string request)
         {
-            string str = $"Учитывай что человек хочет:{tipe}";
+            string str = $"Учитывай что человек хочет:{tipe}, составь диету для человека";
             var (response1, updatedHistory) = await GetChatCompletion(accessToken, str + request, conversationHistory);
             if (response1 != null)
             {
                 JObject responseJson = JObject.Parse(response1);
                 string assistantResponse = responseJson["choices"]?[0]?["message"]?["content"]?.ToString();
+                assistantResponse = assistantResponse.Replace("###", "");
+                assistantResponse = assistantResponse.Replace("**", "");
                 DialogTextBox.Text = ($"{assistantResponse}");
                 conversationHistory = updatedHistory;
             }
@@ -147,7 +149,7 @@ namespace GroupProject
                 top_p = 0.1,
                 n = 1,
                 stream = false,
-                max_tokens = 512,
+                max_tokens = 1024,
                 repetition_penalty = 1,
                 update_interval = 0
             });

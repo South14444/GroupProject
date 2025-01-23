@@ -5,38 +5,79 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GroupProject"
         mc:Ignorable="d"
-        Title="Помощник для вашей диеты" Height="375" Width="400">
+        Title="Помощник для вашей диеты" Height="450" Width="400">
+
+    <Window.Resources>
+        <!-- Стиль для TextBox -->
+        <Style x:Key="TextBoxStyle" TargetType="TextBox">
+            <Setter Property="Background" Value="#F4F4F4"/>
+            <Setter Property="BorderBrush" Value="#B5B5B5"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Height" Value="40"/>
+        </Style>
+
+        <!-- Стиль для PasswordBox -->
+        <Style x:Key="PasswordBoxStyle" TargetType="PasswordBox">
+            <Setter Property="Background" Value="#F4F4F4"/>
+            <Setter Property="BorderBrush" Value="#B5B5B5"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Height" Value="40"/>
+        </Style>
+
+        <!-- Стиль для Button -->
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#4CAF50"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="Width" Value="250"/>
+            <Setter Property="Height" Value="45"/>
+            <Setter Property="Margin" Value="0,10"/>
+        </Style>
+
+        <!-- Стиль для TextBlock -->
+        <Style x:Key="TextBlockStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="0,5"/>
+        </Style>
+    </Window.Resources>
+
     <Grid>
-        <TabControl>
+        <TabControl Margin="10">
             <!-- Вкладка Вход -->
             <TabItem Header="Вход">
-                <StackPanel Margin="20">
-                    <TextBlock Text="Email" Margin="0,0,0,5"/>
-                    <TextBox Name="EmailLoginTextBox" Width="250" Margin="0,0,0,10"/>
+                <StackPanel Margin="10">
+                    <TextBlock Text="Email" Style="{StaticResource TextBlockStyle}"/>
+                    <TextBox Name="EmailLoginTextBox" Width="250" Style="{StaticResource TextBoxStyle}"/>
 
-                    <TextBlock Text="Пароль" Margin="0,0,0,5"/>
-                    <PasswordBox Name="PasswordLoginBox" Width="250" Margin="0,0,0,10"/>
+                    <TextBlock Text="Пароль" Style="{StaticResource TextBlockStyle}"/>
+                    <PasswordBox Name="PasswordLoginBox" Width="250" Style="{StaticResource PasswordBoxStyle}"/>
 
-                    <Button Content="Войти" Width="250" Click="LoginButton_Click"/>
+                    <Button Content="Войти" Style="{StaticResource ButtonStyle}" Click="LoginButton_Click"/>
                 </StackPanel>
             </TabItem>
 
             <!-- Вкладка Регистрация -->
             <TabItem Header="Регистрация">
-                <StackPanel Margin="20">
-                    <TextBlock Text="Email" Margin="0,0,0,5"/>
-                    <TextBox Name="EmailRegisterTextBox" Width="250" Margin="0,0,0,10"/>
+                <StackPanel Margin="10">
+                    <TextBlock Text="Email" Style="{StaticResource TextBlockStyle}"/>
+                    <TextBox Name="EmailRegisterTextBox" Width="250" Style="{StaticResource TextBoxStyle}"/>
 
-                    <TextBlock Text="Пароль" Margin="0,0,0,5"/>
-                    <PasswordBox Name="PasswordRegisterBox" Width="250" Margin="0,0,0,10"/>
+                    <TextBlock Text="Пароль" Style="{StaticResource TextBlockStyle}"/>
+                    <PasswordBox Name="PasswordRegisterBox" Width="250" Style="{StaticResource PasswordBoxStyle}"/>
 
-                    <TextBlock Text="Имя" Margin="0,0,0,5"/>
-                    <TextBox Name="FirstNameTextBox" Width="250" Margin="0,0,0,10"/>
+                    <TextBlock Text="Имя" Style="{StaticResource TextBlockStyle}"/>
+                    <TextBox Name="FirstNameTextBox" Width="250" Style="{StaticResource TextBoxStyle}"/>
 
-                    <TextBlock Text="Фамилия" Margin="0,0,0,5"/>
-                    <TextBox Name="LastNameTextBox" Width="250" Margin="0,0,0,10"/>
+                    <TextBlock Text="Фамилия" Style="{StaticResource TextBlockStyle}"/>
+                    <TextBox Name="LastNameTextBox" Width="250" Style="{StaticResource TextBoxStyle}"/>
 
-                    <Button Content="Зарегистрироваться" Width="250" Click="RegisterButton_Click"/>
+                    <Button Content="Зарегистрироваться" Style="{StaticResource ButtonStyle}" Click="RegisterButton_Click"/>
                 </StackPanel>
             </TabItem>
         </TabControl>

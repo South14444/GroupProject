@@ -1,15 +1,8 @@
 ﻿using GroupProject.Models;
 using GroupProject.Service;
-using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace GroupProject
 {
@@ -22,6 +15,7 @@ namespace GroupProject
         {
             InitializeComponent();
         }
+
         private async void LoginButton_Click(object sender, RoutedEventArgs e)
         {
             var userRegistration = new Registration();
@@ -45,13 +39,28 @@ namespace GroupProject
 
         private async void RegisterButton_Click(object sender, RoutedEventArgs e)
         {
-
             var userRegistration = new Registration();
+
+            string firstName = FirstNameTextBox.Text;
+            string lastName = LastNameTextBox.Text;
+
+            // Проверка на буквы
+            if (!IsValidName(firstName))
+            {
+                MessageBox.Show("Имя может содержать только буквы.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if (!IsValidName(lastName))
+            {
+                MessageBox.Show("Фамилия может содержать только буквы.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
 
             var newUser = new User
             {
-                Name = FirstNameTextBox.Text,
-                Surname = LastNameTextBox.Text,
+                Name = firstName,
+                Surname = lastName,
                 Password = PasswordRegisterBox.Password,
                 Email = EmailRegisterTextBox.Text,
             };
@@ -69,6 +78,12 @@ namespace GroupProject
             {
                 MessageBox.Show($"Ошибка регистрации: {ex.Message}");
             }
+        }
+
+        // Метод для проверки, что строка состоит только из букв
+        private bool IsValidName(string name)
+        {
+            return !string.IsNullOrEmpty(name) && Regex.IsMatch(name, @"^[a-zA-Zа-яА-ЯёЁ]+$");
         }
     }
 }
