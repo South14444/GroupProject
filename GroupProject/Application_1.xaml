@@ -1,7 +1,7 @@
 ﻿<Window x:Class="GroupProject.Application_1"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Тихий омут" Height="300" Width="600">
+        Title="Помощник для вашей диеты" Height="300" Width="600">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />

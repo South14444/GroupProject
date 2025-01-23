@@ -106,7 +106,8 @@ namespace GroupProject
         }
         public async Task Diet(string request)
         {
-            var (response1, updatedHistory) = await GetChatCompletion(accessToken, request, conversationHistory);
+            string str = $"Учитывай что человек хочет:{tipe}";
+            var (response1, updatedHistory) = await GetChatCompletion(accessToken, str + request, conversationHistory);
             if (response1 != null)
             {
                 JObject responseJson = JObject.Parse(response1);
@@ -142,7 +143,7 @@ namespace GroupProject
             {
                 model = "GigaChat:latest",
                 messages = conversationHistory,
-                temperature = 1,
+                temperature = 0.5,
                 top_p = 0.1,
                 n = 1,
                 stream = false,
@@ -197,6 +198,18 @@ namespace GroupProject
                 timer.Stop();
                 timer = null;
             }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (timer != null)
+            {
+                timer.Stop();
+                timer = null;
+            }
+            Application_1 secondWindow = new Application_1();
+            secondWindow.Show();
+            this.Close();
         }
     }
 }
